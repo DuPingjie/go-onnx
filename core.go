@@ -358,7 +358,6 @@ func (ortSession *ORTSession) Predict(inputTensorValues []TensorValue) (result [
 	ortValuesInput := ORTValues{
 		val: C.ORTValues_New(),
 	}
-
 	for _, inputTensorValue := range inputTensorValues {
 		tensorVector, err := newTensorVector(inputTensorValue)
 		if err != nil {
@@ -366,7 +365,6 @@ func (ortSession *ORTSession) Predict(inputTensorValues []TensorValue) (result [
 		}
 		C.ORTValues_AppendTensor(tensorVector, ortValuesInput.val)
 	}
-
 	output := C.ORTSession_Predict(ortSession.sess, ortValuesInput.val)
 	outputSize := int(output.length)
 	tensorValues := make([]C.TensorVector, outputSize)
@@ -385,6 +383,8 @@ func (ortSession *ORTSession) Predict(inputTensorValues []TensorValue) (result [
 		}
 	}
 	C.TensorVectors_Clear(output)
+	C.ORTValues_Clear(ortValuesInput.val)
+	C.free(unsafe.Pointer(ortValuesInput.val))
 
 	return result, nil
 }

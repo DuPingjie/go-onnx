@@ -56,7 +56,7 @@ void ORTValues_AppendTensor(TensorVector tensor_input, ORTValues *ort_values){
     auto memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
    
     switch (tensor_input.data_type) {
-    case ONNX_TENSOR_ELEMENT_DATA_TYPE_UNDEFINED:
+    case ONNX_TENSOR_ELEMENT_DATA_TYPE_UNDEFINED:   
         throw std::runtime_error(std::string("undefined data type detected in ORTValues_AppendTensor"));
         break;
     case ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT:
@@ -191,4 +191,8 @@ void TensorVectors_Clear(TensorVectors tvs){
         free(tvs.arr_vector[i].val);
     }
     free(tvs.arr_vector);
+}
+
+void ORTValues_Clear(ORTValues *ov){
+    ov->clear();
 }

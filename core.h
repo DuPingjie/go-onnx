@@ -62,7 +62,7 @@ TensorVectors ORTSession_Predict(ORTSession session, ORTValues* ort_values_input
 ORTValues* ORTValues_New();
 void ORTValues_AppendTensor( TensorVector tensor_input, ORTValues* ort_values);
 void TensorVectors_Clear(TensorVectors tvs);
-
+void ORTValues_Clear(ORTValues *ov);
 #ifdef __cplusplus
 }
 #endif
